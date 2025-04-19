@@ -29,6 +29,13 @@ loan-application-system/
 │  └─ admin.js
 └─ day3/
    ├─ (merged content from day1 and day2)
+
+VIDEO WALKTHROUGH OF PROJECT -
+https://youtu.be/ApTR6wNm2mg
+
+VIDEO WALKTHROUGH OF CODEBASE-
+https://youtu.be/oVZNZJ_qZJU
+
    
 Features-
 
