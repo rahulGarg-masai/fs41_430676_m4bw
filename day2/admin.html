@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .header h1 {
+            color: #333;
+        }
+        .approve-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .approve-btn:hover {
+            background-color: #45a049;
+        }
+        .applications-list {
+            margin-top: 20px;
+        }
+        .application-item {
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            background-color: #fff;
+        }
+        .application-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .application-name {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .under-review {
+            background-color: #ffebee;
+            color: #c62828;
+        }
+        .approved {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+        }
+        .application-details {
+            margin-top: 10px;
+        }
+        .detail-row {
+            margin-bottom: 5px;
+        }
+        .detail-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 150px;
+        }
+        .no-applications {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <button id="approve-all-btn" class="approve-btn">Approve All Applications</button>
+        </div>
+        
+        <div class="applications-container">
+            <h2>Loan Applications</h2>
+            <div id="applications-list" class="applications-list">
+                <!-- Applications will be loaded here -->
+                <div class="no-applications">No applications found</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html> 

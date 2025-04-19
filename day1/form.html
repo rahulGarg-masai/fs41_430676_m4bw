@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="form.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Application Form</title>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Loan Application</h1>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+                <div class="step active" data-step="1">1</div>
+                <div class="step" data-step="2">2</div>
+                <div class="step" data-step="3">3</div>
+                <div class="step" data-step="4">4</div>
+            </div>
+            <div class="step-titles">
+                <span class="step-title active">Personal Info</span>
+                <span class="step-title">Financial Details</span>
+                <span class="step-title">Loan Details</span>
+                <span class="step-title">Documents</span>
+            </div>
+        </div>
+
+        <!-- Multi-step Form -->
+        <div class="form-container">
+            <form id="loanApplicationForm">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="step1">
+                    <h2>Personal Information</h2>
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                        <div class="error-message" id="fullNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message" id="emailError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                        <div class="error-message" id="phoneError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" required>
+                        <div class="error-message" id="dobError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Current Address</label>
+                        <textarea id="address" name="address" required></textarea>
+                        <div class="error-message" id="addressError"></div>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn next-btn" id="step1Next">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Financial Details -->
+                <div class="form-step" id="step2">
+                    <h2>Financial Details</h2>
+                    <div class="form-group">
+                        <label for="employmentStatus">Employment Status</label>
+                        <select id="employmentStatus" name="employmentStatus" required>
+                            <option value="">Select</option>
+                            <option value="employed">Employed</option>
+                            <option value="self-employed">Self-Employed</option>
+                            <option value="unemployed">Unemployed</option>
+                            <option value="retired">Retired</option>
+                        </select>
+                        <div class="error-message" id="employmentStatusError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="monthlyIncome">Monthly Income (USD)</label>
+                        <input type="number" id="monthlyIncome" name="monthlyIncome" required min="0">
+                        <div class="error-message" id="monthlyIncomeError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="existingLoans">Existing Loans</label>
+                        <select id="existingLoans" name="existingLoans" required>
+                            <option value="">Select</option>
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                        <div class="error-message" id="existingLoansError"></div>
+                    </div>
+                    <div class="form-group" id="existingLoansDetailsGroup" style="display:none;">
+                        <label for="existingLoansDetails">Existing Loans Details</label>
+                        <textarea id="existingLoansDetails" name="existingLoansDetails"></textarea>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn prev-btn" id="step2Prev">Previous</button>
+                        <button type="button" class="btn next-btn" id="step2Next">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Loan Details -->
+                <div class="form-step" id="step3">
+                    <h2>Loan Details</h2>
+                    <div class="form-group">
+                        <label for="loanType">Loan Type</label>
+                        <select id="loanType" name="loanType" required>
+                            <option value="">Select</option>
+                            <option value="personal">Personal Loan</option>
+                            <option value="home">Home Loan</option>
+                            <option value="auto">Auto Loan</option>
+                            <option value="education">Education Loan</option>
+                            <option value="business">Business Loan</option>
+                        </select>
+                        <div class="error-message" id="loanTypeError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanAmount">Loan Amount (USD)</label>
+                        <input type="number" id="loanAmount" name="loanAmount" required min="1000">
+                        <div class="error-message" id="loanAmountError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanPurpose">Loan Purpose</label>
+                        <textarea id="loanPurpose" name="loanPurpose" required></textarea>
+                        <div class="error-message" id="loanPurposeError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loanTerm">Loan Term (Months)</label>
+                        <select id="loanTerm" name="loanTerm" required>
+                            <option value="">Select</option>
+                            <option value="12">12 months</option>
+                            <option value="24">24 months</option>
+                            <option value="36">36 months</option>
+                            <option value="48">48 months</option>
+                            <option value="60">60 months</option>
+                        </select>
+                        <div class="error-message" id="loanTermError"></div>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn prev-btn" id="step3Prev">Previous</button>
+                        <button type="button" class="btn next-btn" id="step3Next">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Documents -->
+                <div class="form-step" id="step4">
+                    <h2>Required Documents</h2>
+                    <div class="form-group">
+                        <label for="idProof">ID Proof (Passport/Driver's License)</label>
+                        <input type="file" id="idProof" name="idProof" accept="image/*, application/pdf" required>
+                        <div class="error-message" id="idProofError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressProof">Address Proof</label>
+                        <input type="file" id="addressProof" name="addressProof" accept="image/*, application/pdf" required>
+                        <div class="error-message" id="addressProofError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="incomeProof">Income Proof</label>
+                        <input type="file" id="incomeProof" name="incomeProof" accept="image/*, application/pdf" required>
+                        <div class="error-message" id="incomeProofError"></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                            <label for="termsAgreement">I agree to the <a href="terms.html" target="_blank">Terms and Conditions</a></label>
+                        </div>
+                        <div class="error-message" id="termsAgreementError"></div>
+                    </div>
+                    <div class="form-buttons">
+                        <button type="button" class="btn prev-btn" id="step4Prev">Previous</button>
+                        <button type="submit" class="btn submit-btn" id="submitApplication">Submit Application</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../day2/form.js"></script>
+</body>
+</html>
